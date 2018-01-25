@@ -1,0 +1,7 @@
+<ul>
+  <li class="btn-outline-danger" *ngFor="let user of users | async">
+    {{user.first}}
+    {{user.last}}
+    {{user.uid}}
+  </li>
+</ul>
