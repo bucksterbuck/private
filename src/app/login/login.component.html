@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col">
-    <h1 *ngIf="loggedIn$">Hey Thedsre!</h1>
+    <h1 *ngIf="(loggedIn$ | async)">Hey There! {{ userTest.uid }}</h1>
     <div class="form-group">
       <label for="email">Email</label>
       <input type="text" class="form-control" id="email" #email required>

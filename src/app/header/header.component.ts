@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import {Users} from '../interfaces/users';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,13 +11,12 @@ import {Users} from '../interfaces/users';
 })
 export class HeaderComponent implements OnInit {
 
-  private settings: Observable<any>;
+  public loggedIn$ = this.auth.auth;
 
-  constructor(private afs: AngularFirestore ) { }
+  constructor(private auth: AuthService ) { }
 
   ngOnInit() {
-    const document: AngularFirestoreDocument<any> = this.afs.doc('globals/sitesettings')
-    this.settings = document.valueChanges();
+
   }
 
 }

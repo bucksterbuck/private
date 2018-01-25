@@ -16,7 +16,9 @@
       </li>
     </ul>
     <span class="navbar-text">
-      <a routerLink="/login" routerLinkActive="active">Login</a>
+      <a *ngIf="!(loggedIn$)" routerLink="/login" routerLinkActive="active">Login</a> ||
+      <a *ngIf="!(loggedIn$)" routerLink="/register" routerLinkActive="active">Register</a>
+      <a *ngIf="(loggedIn$)" routerLink="/logout">Logout</a>
     </span>
   </div>
 </nav>
