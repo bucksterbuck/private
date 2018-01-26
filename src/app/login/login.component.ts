@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import {AuthService} from '../services/auth.service';
-import {isSuccess} from '@angular/http/src/http_utils';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
@@ -17,16 +15,7 @@ export class LoginComponent implements OnInit {
   public in: boolean;
 
   public userTest = this.auth.getUserInfo();
-  constructor(public auth: AuthService, public af: AngularFireAuth ) {
-    // af.authState.subscribe(data => {
-    //   if (data !== null) {
-    //     // console.log(data);
-    //     // console.log(data.toJSON());
-    //     this.user = data;
-    //     this.in = true;
-    //   } else { this.in = false; }
-    // });
-    this.user$ = af.authState;
+  constructor(public auth: AuthService ) {
   }
 
   ngOnInit() {

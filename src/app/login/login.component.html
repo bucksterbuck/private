@@ -15,6 +15,7 @@
     <input (click)="clickMe()" type="submit" class="btn btn-outline-primary" value="Ckucj ME"><br>
     <h1 *ngIf="user$ | async as user ">{{ user.uid }}</h1>
     <h1>AUth Service Test</h1>
+    <mat-checkbox>Hello There!</mat-checkbox>
 
     <p *ngIf="(user$ | async )"> {{ user$ | async | json }}</p>
 
