@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col">
-    <h1 *ngIf="(loggedIn$ | async)">Hey There! {{ userTest.uid }}</h1>
+    <h1 *ngIf="(user$ | async)">Hey There! </h1>
     <div class="form-group">
       <label for="email">Email</label>
       <input type="text" class="form-control" id="email" #email required>
@@ -12,7 +12,11 @@
     <input (click)="login(email, password)" type="submit" class="btn btn-outline-primary" value="Login">
     <br>
     <input (click)="logout()" type="submit" class="btn btn-outline-primary" value="Logout"><br>
-    {{ loggedIn$ | async | json }}
+    <input (click)="clickMe()" type="submit" class="btn btn-outline-primary" value="Ckucj ME"><br>
+    <h1 *ngIf="user$ | async as user ">{{ user.uid }}</h1>
+    <h1>AUth Service Test</h1>
+
+    <p *ngIf="(user$ | async )"> {{ user$ | async | json }}</p>
 
   </div>
 </div>

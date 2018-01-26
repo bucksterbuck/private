@@ -8,12 +8,12 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class AuthService {
 
-  public auth: Observable<firebase.User>;
-
+  public auth: Observable<boolean>;
+  public user: Observable<firebase.User>;
 
   constructor(private afAuth: AngularFireAuth,
               ) {
-    this.auth = afAuth.authState;
+    this.user = this.afAuth.authState;
   }
   login (email, password) {
     this.afAuth.auth.signInWithEmailAndPassword(email, password)
@@ -35,12 +35,18 @@ export class AuthService {
       });
   }
 
-  isLoggedIn(): Observable<boolean> {
-    return this.auth.map(auth => auth && auth.uid !== undefined);
-  }
+  // isLoggedIn(): Observable<boolean> {
+  //   return this.auth.map(auth => auth && auth.uid !== undefined);
+  // }
 
   getUserInfo() {
-    return this.afAuth.auth.currentUser;
+    this.afAuth.auth.onAuthStateChanged(function (user) {
+      if (user) {
+        // console.log(user);
+        return user;
+      }
+    });
+
   }
 
 

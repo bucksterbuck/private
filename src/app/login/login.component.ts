@@ -3,6 +3,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import {AuthService} from '../services/auth.service';
 import {isSuccess} from '@angular/http/src/http_utils';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-login',
@@ -11,17 +12,25 @@ import {isSuccess} from '@angular/http/src/http_utils';
 })
 export class LoginComponent implements OnInit {
   public loggedIn$ = this.auth.auth;
-  public authenticated;
-  public user = this.af.auth.currentUser.uid;
+  public user$: Observable<firebase.User> = this.auth.user;
+  private test = this.auth.user;
+  public in: boolean;
+
   public userTest = this.auth.getUserInfo();
   constructor(public auth: AuthService, public af: AngularFireAuth ) {
-    this.auth.isLoggedIn()
-      .subscribe((success) => this.authenticated = success);
+    // af.authState.subscribe(data => {
+    //   if (data !== null) {
+    //     // console.log(data);
+    //     // console.log(data.toJSON());
+    //     this.user = data;
+    //     this.in = true;
+    //   } else { this.in = false; }
+    // });
+    this.user$ = af.authState;
   }
 
   ngOnInit() {
-    console.log(this.auth.isLoggedIn());
-    console.log(this.authenticated);
+
   }
 
 
@@ -34,5 +43,10 @@ export class LoginComponent implements OnInit {
   logout() {
     this.auth.logout();
 
+  }
+
+  clickMe() {
+    // console.log(this.loggedIn$);
+    console.log(this.user$);
   }
 }
