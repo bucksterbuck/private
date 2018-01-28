@@ -4,5 +4,13 @@ export interface Users {
   email: string;
   date_joined: string;
   uid: string;
-  username: string;
+  displayName: string;
+  role: string;
+  address_line1: string;
+  address_line2: string;
+  company: string;
+  city: string;
+  state: string;
+  zip: string;
+  profile_pic: string;
 }

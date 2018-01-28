@@ -8,7 +8,7 @@
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="pad" mat-raised-button color="primary" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="pad" mat-raised-button color="primary" href="#"><i class="material-icons">home</i>Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="pad" mat-raised-button color="primary" href="#">Features</a>
@@ -21,7 +21,7 @@
       <a class="pad" mat-raised-button color="primary" *ngIf="!(loggedIn$ | async)" routerLink="/login" routerLinkActive="active">Login</a>
       <a class="pad" mat-raised-button color="primary" *ngIf="!(loggedIn$ | async)" routerLink="/register" routerLinkActive="active">Register</a>
       <p  *ngIf="loggedIn$ | async as user">{{ user.displayName }}</p>
-      <a class="pad" mat-raised-button color="primary" *ngIf="(loggedIn$ | async)" (click)="logout()" routerLink="/"><mat-icon>home</mat-icon>Logout</a>
+      <a class="pad" mat-raised-button color="primary" *ngIf="(loggedIn$ | async)" (click)="logout()" routerLink="/"><i class="material-icons">&#xE860;</i> Logout</a>
     </span>
   </div>
 </nav>

@@ -42,12 +42,9 @@ export class AuthService {
   getUserInfo() {
     this.afAuth.auth.onAuthStateChanged(function (user) {
       if (user) {
-        // console.log(user);
+        // console.log(usesdfsdfr);
         return user;
       }
     });
-
   }
-
-
 }
