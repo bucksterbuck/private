@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../services/auth.service';
 import {Observable} from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
-import {UsersService} from "../services/users.service";
+import {UsersService} from '../services/users.service';
 
 @Component({
   selector: 'app-members',
@@ -20,7 +20,7 @@ export class MembersComponent implements OnInit {
 //
   ngOnInit() {
     this.userData.userDoc.subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.info = data;
     });
     // console.log(firebase.storage());

@@ -3,6 +3,7 @@ import {AuthService} from '../services/auth.service';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Router} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,11 @@ export class RegisterComponent implements OnInit {
   private month = this.date.getMonth() + 1;
   private year = this.date.getFullYear();
   private fullCurrentDate = this.month + '/' + this.day + '/' + this.year; // Full Date
-  constructor(public auth: AngularFireAuth, public dbC: AngularFirestore, public router: Router) { }
+  private states;
+  constructor(public auth: AngularFireAuth, public dbC: AngularFirestore, public router: Router,
+              public http: HttpClient) {
+    this.http.get('../assets/data/states.json').subscribe(data => { console.log(data); this.states = data; });
+  }
 
   log(x) { console.log(x.value); }
 

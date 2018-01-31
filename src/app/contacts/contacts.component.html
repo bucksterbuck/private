@@ -1,0 +1,38 @@
+<app-owner-dashboard-header></app-owner-dashboard-header>
+<app-owner-dashboard-sidebar></app-owner-dashboard-sidebar>
+
+<div id="main" class="main">
+
+  <div class="row text-center">
+    <div class="col-12">
+      <h1>Contacts</h1>
+      <h1>Create Contact</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+  <form>
+      <div class="form-row row justify-content-center">
+
+        <div class="col-3 form-group">
+          <label for="first">First Name</label>
+          <input required ngModel #first="ngModel" name="first" type="text" class="form-control" id="first">
+        </div>
+
+        <div class="col-3 form-group">
+          <label for="last">Last Name</label>
+          <input type="text" class="form-control" id="last">
+        </div>
+        <div class="col-3 form-group">
+          <label for="company">Company</label>
+          <input type="text" class="form-control" id="company">
+        </div>
+
+      </div>
+  </form>
+    </div>
+  </div>
+
+
+</div>

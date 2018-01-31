@@ -28,7 +28,6 @@ export class UsersService {
   //     this.userDoc = this.db.collection('users').doc(data.uid)
   //       .valueChanges().subscribe(info => {
   //        console.log(info);
-  //sdsd
   //       });
   //     console.log(this.userDoc);
   //   });

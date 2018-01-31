@@ -5,34 +5,36 @@
     <mat-card class="example-card">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title><h1>Registration</h1></mat-card-title>
-        <mat-card-subtitle>Register here</mat-card-subtitle>
+        <mat-card-title><h1>Edit {{ info.first }}'s Profile</h1></mat-card-title>
+        <mat-card-subtitle>Edit Your Profile Here!</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <!--<mat-form-field><input mat placeholder="First Name"> </mat-form-field>-->
-        <form #registerForm="ngForm" (ngSubmit)="register(firstName, lastName, password1, password2, company, email,
-                                                          address, address2, city, state, zip)">
+        <form #registerForm="ngForm" enctype="multipart/form-data"
+              (ngSubmit)="update(firstName, lastName, password1, password2, company, email,
+                                address, address2, city, state, zip)">
           <div class="form-row">
             <div class="form-group col">
               <label for="firstName">First Name</label>
-              <input required ngModel (change)="log(firstName)"  #firstName="ngModel"  name="firstName"
-                     class="form-control" type="text" id="firstName" placeholder="First Name">
-              <div *ngIf="firstName.touched && firstName.errors" class="alert alert-danger error">
-                <div *ngIf="!(firstName.valid)">You must include your First Name!</div>
+              <input required ngModel #firstName="ngModel" (click)="log(firstName)"  name="firstName"
+                     class="form-control" type="text" id="firstName" placeholder="First Name" value="{{ info.first }}">
+              <div *ngIf="!(firstName.pristine) && (firstName.errors)" class="alert alert-danger error">
+                <div>You must include your First Name!</div>
               </div>
             </div>
             <div class="form-group col">
               <label for="last">Last Name</label>
-              <input required ngModel #lastName="ngModel" name="lastName" class="form-control" type="text" id="last" placeholder="Last Name">
-              <div *ngIf="lastName.touched && lastName.errors" class="alert alert-danger error">
-                <div *ngIf="!(lastName.valid)">You must include your Last Name!</div>
+              <input required ngModel #lastName="ngModel" name="lastName" class="form-control" type="text" id="last"
+                     placeholder="Last Name" value="{{ info.last }}">
+              <div *ngIf="!(lastName.pristine) && (lastName.errors)" class="alert alert-danger error">
+                <div>You must include your Last Name!</div>
               </div>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col">
               <label for="password1">Password</label>
-              <input required ngModel #password1="ngModel"  name="password1"
+              <input ngModel #password1="ngModel"  name="password1"
                      class="form-control" type="password" id="password1" placeholder="Password">
               <div *ngIf="password1.touched && password1.errors" class="alert alert-danger error">
                 <div *ngIf="!(password1.valid)">You must provide a password!</div>
@@ -40,7 +42,7 @@
             </div>
             <div class="form-group col">
               <label for="password2">Confirm Password</label>
-              <input required ngModel #password2="ngModel" name="password2" class="form-control" type="text"
+              <input ngModel #password2="ngModel"  (click)="log(password2)" name="password2" class="form-control" type="password"
                      id="password2" placeholder="Confirm Password">
               <div *ngIf="password2.touched && password2.errors" class="alert alert-danger error">
                 <div *ngIf="!(password2.valid)">You must confirm your password!</div>
@@ -53,62 +55,81 @@
           <div class="form-group">
             <label for="company">Company Name</label>
             <input required ngModel #company="ngModel" name="company" class="form-control" type="text" id="company"
-                   placeholder="Company Name">
+                   placeholder="Company Name" value="{{info.company}}">
           </div>
-          <div *ngIf="company.touched && company.errors" class="alert alert-danger error">
-            <div *ngIf="!(company.valid)">You must include your Company Name!</div>
+          <div *ngIf="!(company.pristine) && (company.errors)" class="alert alert-danger error">
+            <div>You must include your Company Name!</div>
           </div>
           <div class="form-group">
-            <label for="email">Email</label>
-            <input required email name="emails" ngModel #email="ngModel"  class="form-control"
-                   type="email" id="email" placeholder="Email">
-            <div *ngIf="email.touched && email.errors" class="alert alert-danger error">
-              <div *ngIf="!(email.valid)">{{email.value}} is not a valid email address.</div>
+            <label for="emails">Email</label>
+            <input required email ngModel #emails="ngModel" name="emails" class="form-control" type="email" id="emails"
+                    placeholder="{{ info.email }}" value="{{info.email}}"><small>You must enter your email to confirm
+                                                                                  changes!</small>
+            <div *ngIf="!(emails.pristine) && emails.errors" class="alert alert-danger error">
+              <div *ngIf="!(emails.valid)">{{emails.value}} is not a valid email address.</div>
             </div>
           </div>
           <div class="form-group">
             <label for="address">Address</label>
             <input required name="address" ngModel #address="ngModel" class="form-control" type="text" id="address"
-                   placeholder="Address">
+                   placeholder="Address" value="{{ info.address_line1 }}">
           </div>
-          <div *ngIf="address.touched && address.errors" class="alert alert-danger error">
-            <div *ngIf="!(address.valid)">Address is required.</div>
+          <div *ngIf="!(address.pristine) && (address.errors)" class="alert alert-danger error">
+            <div>Address is required.</div>
           </div>
           <div class="form-group">
             <label for="address2">Address Line Two</label>
-            <input class="form-control" ngModel #address2="ngModel" name="address2" type="text" id="address2" placeholder="Address Line Two">
+            <input class="form-control" ngModel #address2="ngModel" name="address2" type="text" id="address2"
+                   placeholder="Address Line Two" value="{{info.address_line2}}">
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="city">City</label>
-              <input required name="city" ngModel #city="ngModel" type="text" class="form-control" id="city">
+              <input required name="city" ngModel #city="ngModel" type="text" class="form-control" id="city"
+              value="{{info.city}}">
             </div>
-            <div *ngIf="city.touched && city.errors" class="alert alert-danger error">
-              <div *ngIf="!(city.valid)">City is required.</div>
+            <div *ngIf="!(city.pristine) && (city.errors)" class="alert alert-danger error">
+              <div>City is required.</div>
             </div>
             <div class="form-group col-md-4">
               <label for="state">State</label>
               <select required ngModel name="state" #state="ngModel" id="state" class="form-control">
-                <option selected>GA</option>
-                <option>FL</option>
+                <option *ngFor="let state of states">{{ state.name }}</option>
+                <option selected>{{ info.state }}</option>
               </select>
             </div>
             <div class="form-group col-md-2">
               <label for="zip">Zip</label>
-              <input required pattern="^[0-9]{5}(?:-[0-9]{4})?$" name="zip" minlength="5" maxlength="5" ngModel #zip="ngModel" type="text"
-                     class="form-control" id="zip">
+              <input matInput required pattern="^[0-9]{5}(?:-[0-9]{4})?$" name="zip" minlength="5" maxlength="5" ngModel
+                     #zip="ngModel" type="text"
+                     class="form-control" id="zip" value="{{info.zip | async}}">
             </div>
-            <div *ngIf="zip.touched && zip.errors" class="alert alert-danger error">
-              <div *ngIf="!(zip.valid)">A valid ZIP Code is required.</div>
+            <div *ngIf="!(zip.pristine) && (zip.errors)" class="alert alert-danger error">
+              <div>A valid ZIP Code is required.</div>
             </div>
+            <div class="row">
+              <div class="col-md-6">
+                <img height="150px" width="150px" src="{{ profilePicLink }}">
+              </div>
+            </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="profile_pic">Update Profile Picture</label>
+                  <input matInput name="profile_pic" profile_pic="ngModel" ngModel (change)="upload(profile_pic)" type="file"
+                         class="form-control-file" id="profile_pic">
+                  <div *ngIf="(currentlyUploading === true)">
+                    <label>Progress:</label>
+                    <mat-progress-bar color="primary" value="{{ progress }}" mode="determinate"></mat-progress-bar>
+                  </div>
+                </div>
+              </div>
           </div>
-          <button *ngIf="!(registerForm.valid) && (password1.value != password2.value)" mat-button color="primary" disabled>Submit</button>
-          <button *ngIf="registerForm.valid && (password1.value == password2.value)" mat-button color="primary" type="submit">Submit</button>
+          <button *ngIf="!(registerForm.pristine)" mat-button color="primary" disabled>Submit</button>
+          <button *ngIf="registerForm.pristine && (password1.value == password2.value)" mat-button color="primary" type="submit">Submit</button>
           <button mat-button color="warn" type="reset">Reset</button>
         </form>
       </mat-card-content>
       <mat-card-actions>
-
       </mat-card-actions>
     </mat-card>
   </div>

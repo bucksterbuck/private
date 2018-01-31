@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase/app';
 import {AuthService} from '../services/auth.service';
 import {Observable} from 'rxjs/Observable';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   public in: boolean;
 
   public userTest = this.auth.getUserInfo();
-  constructor(public auth: AuthService ) {
+  constructor(public auth: AuthService, public router: Router ) {
   }
 
   ngOnInit() {
@@ -27,7 +28,11 @@ export class LoginComponent implements OnInit {
     console.log(email.value);
     console.log(password.value);
 
-    this.auth.login(email.value, password.value);
+    firebase.auth().signInWithEmailAndPassword(email.value, password.value).then(succ => {
+      this.router.navigate(['members']); // Navigate to Members Area
+    })
+      .catch(err => { console.log(err); }); // Login
+
   }
   logout() {
     this.auth.logout();
@@ -35,7 +40,7 @@ export class LoginComponent implements OnInit {
   }
 
   clickMe() {
-    // console.log(this.loggedIn$);
+    // console.log(this.lsdsdoggedIn$);
     console.log(this.user$);
   }
 }
