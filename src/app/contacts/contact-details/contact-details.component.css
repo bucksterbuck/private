@@ -1,0 +1,32 @@
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+}
+
+.padding {
+  padding: 15px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.table-font {
+  font-size: 12px;
+}
+
+.pull-right {
+  flex: 1 1 auto;
+}
+
+.aligned-with-icon{
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 5px; /* optional s*/
+}
+
+.wide {
+  display: flex;
+  flex-direction: row;
+  min-width: 300px;
+}

@@ -10,6 +10,7 @@ export class AuthService {
 
   public auth: Observable<boolean>;
   public user: Observable<firebase.User>;
+  public uid;
 
   constructor(private afAuth: AngularFireAuth,
               ) {

@@ -1,0 +1,265 @@
+<app-owner-dashboard-header></app-owner-dashboard-header>
+<app-owner-dashboard-sidebar></app-owner-dashboard-sidebar>
+<!--ssssssss-->
+<div id="main" class="main">
+  <div class="row justify-content-center">
+    <div class="col-lg-11 col-md-9" *ngIf="data">
+      <div class="mat-elevation-z18 ">
+      <mat-toolbar color="primary">
+        <span><h2>{{ data.company }}</h2></span>
+        <span class="pull-right"></span>
+        <a (click)="goBack()" class="btn btn-outline-primary"><i class="fa fa-arrow-circle-o-left"></i>  Back to Contacts</a>
+      </mat-toolbar>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-11 col-md-9 justify-content-center" *ngIf="data">
+      <div class="mat-elevation-z18 justify-content-center">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title><h2>{{ data.first }} {{ data.last }}</h2></mat-card-title>
+            <mat-card-subtitle><h4>{{ data.email }}</h4></mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <table class="table-striped table-bordered table-font">
+              <thead>
+              <tr>
+                <th scope="col" class="padding">First Name</th>
+                <th scope="col" class="padding">Last Name</th>
+                <th scope="col" class="padding">Company</th>
+                <th scope="col" class="padding">Email</th>
+                <th scope="col" class="padding">Phone</th>
+                <th scope="col" class="padding">Fax</th>
+                <th scope="col" class="padding">Address</th>
+                <th scope="col" class="padding">City</th>
+                <th scope="col" class="padding">State</th>
+                <th scope="col" class="padding">ZIP</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <th scope="row" class="padding">{{ data.first }}</th>
+                <th scope="row" class="padding">{{ data.last }}</th>
+                <th scope="row" class="padding">{{ data.company }}</th>
+                <th scope="row" class="padding">{{ data.email }}</th>
+                <th scope="row" class="padding">{{ data.phone }}</th>
+                <th scope="row" class="padding">{{ data.fax }}</th>
+                <th scope="row" class="padding" >{{ data.address_line_1 }}<br> {{ data.address_line_2}}</th>
+                <th scope="row" class="padding">{{ data.city }}</th>
+                <th scope="row" class="padding">{{ data.state }}</th>
+                <th scope="row" class="padding">{{ data.zip }}</th>
+              </tr>
+              </tbody>
+            </table>
+          </mat-card-content><!-- ssssss-->
+            <div *ngIf="isEditing" class="row justify-content-center">
+              <div class="col-12 mat-card example-container">
+                <form ngForm #editForm="ngForm" name="editForm" (ngSubmit)="editContacts(editForm)">
+            <div class="form-row row example-container">
+                <div class="col-3">
+              <mat-form-field>
+                <input matInput ngModel #first="ngModel" name="first" placeholder="First name">
+              </mat-form-field>
+            </div>
+              <div class="col-3">
+                <mat-form-field>
+                  <input matInput ngModel #last="ngModel" name="last" placeholder="Last name">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field>
+                  <input matInput ngModel #company="ngModel" name="company" placeholder="Company">
+                </mat-form-field>
+              </div>
+            </div>
+              <div class="row"> <!--sss -->
+              <div class="col-3">
+                <mat-form-field>
+                  <input matInput ngModel #phone="ngModel" name="phone" placeholder="Phone Number">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field>
+                  <input matInput ngModel #fax="ngModel" name="fax" placeholder="Fax Number">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field>
+                  <input matInput ngModel #email="ngModel" name="email" placeholder="Email Address">
+                </mat-form-field>
+              </div>
+              </div>
+                  <div class="form-row row">
+                    <div class="col-9 form-group">
+                      <mat-form-field>
+                        <input matInput type="text" width="100%" placeholder="Website Address" name="website" ngModel #website="ngModel"  id="website">
+                      </mat-form-field>
+                    </div>
+                  </div>
+              <div class="form-row row">
+                <div class="col-9 form-group">
+                  <mat-form-field>
+                    <input  matInput ngModel #address_line_1="ngModel" name="address_line_1" placeholder="Address Line One">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-9">
+                  <mat-form-field>
+                    <input matInput ngModel #address_line_2="ngModel" name="address_line_2" placeholder="Address Line Two">
+                  </mat-form-field>
+                </div>
+              </div>
+                  <div class="row"> <!--ssssss -->
+                    <div class="col-3">
+                      <mat-form-field>
+                        <input matInput ngModel #city="ngModel" name="city" placeholder="City">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                      <mat-form-field>
+                        <input matInput ngModel #state="ngModel" name="state" placeholder="State">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                      <mat-form-field>
+                        <input matInput ngModel #zip="ngModel" name="zip" placeholder="ZIP Code">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <button mat-button color="primary" type="submit">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div *ngIf="showDelete">Are You sure you want to delete this contact?
+              <button mat-button color="warn" (click)="letsDelete(data.id)">Yes</button>
+              <button mat-button color="primary" (click)="dontDelete()">No</button>
+            </div>
+            <button mat-button color="primary" (click)="timeToEdit()">Edit</button>
+            <button mat-button matTooltip="Warning: this will delete this contact!" color="warn" (click)="deleteShow(data.id)">Delete</button>
+
+        </mat-card>
+
+      </div>
+    </div>
+  </div>
+  <br><br><br>
+  <div class="row justify-content-center">
+    <div class="col-lg-11 col-md-9" *ngIf="data">
+      <div class="mat-elevation-z18 ">
+        <mat-toolbar color="primary">
+          <span><h2>Notes On <span *ngIf="data.company">{{ data.company }}</span></h2></span>
+          <span class="pull-right"></span>
+          <a (click)="goBack()" class="btn btn-outline-primary"><i class="fa fa-arrow-circle-o-left"></i>  Back to Contacts</a>
+        </mat-toolbar>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-11 col-md-9 justify-content-center" *ngIf="data">
+      <div class="mat-elevation-z18 justify-content-center">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title><h2>{{ data.first }} {{ data.last }}</h2></mat-card-title>
+            <mat-card-subtitle><h4>{{ data.email }}</h4></mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">
+              <div class="col">
+                <h1>Current Notes</h1>
+                <div class="row" *ngIf="notes">
+                  <div class="col-6" *ngFor="let note of notes" >
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header color="primary">
+                        <mat-panel-title>
+                          {{ note.name }}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          {{ note.description }}, Created On: {{ note.date_created | date: 'dd/MM/yyyy' }}
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      <p> {{ note.content }} </p>
+                      <div class="row" *ngIf="isNoteEditing">
+                        <div class="col">
+                          <div class="row">                 <!-- Create Note Form -->
+                            <div class="col">
+                              <form name="editNoteForm" ngForm #editNoteForm="ngForm"
+                                    (ngSubmit)="editNote(editNoteForm, note.nid)">
+                                <mat-form-field>
+                                  <input matInput ngModel="{{note.name}}" [value]="note.name" #name="ngModel"
+                                         name="name"  placeholder="Name of Note">
+                                </mat-form-field>
+                                <mat-form-field>
+                                  <input matInput ngModel="{{note.description}}" [value]="note.description"
+                                         #description="ngModel" name="description"  placeholder="Description of Note">
+                                </mat-form-field>
+                                <mat-form-field>
+                                  <textarea matInput ngModel="{{note.content}}"  value="note.content" ngModel
+                                            #content="ngModel" name="content"  placeholder="Type Your Note Here"></textarea>
+                                </mat-form-field>
+                                <div class="row">
+                                  <div class="col">
+                                    <button mat-button type="submit" color="primary">Edit Note</button>
+                                    <button mat-button type="reset" color="warn">Reset Form</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="isNoteDelete">
+                        <div class="col">
+                          <p>Are you sure you want to delete this note?</p>
+                          <button mat-button color="warn" matTooltip="WARNING: THIS WILL PERMANENTLY DELETE THE NOTE"
+                          (click)="deleteNote(note.nid)">
+                            Yes
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <button *ngIf="!(isNoteEditing)" mat-button color="primary" (click)="setEditNote(note.nid)">Edit</button>
+                          <button *ngIf="!(isNoteDelete)"  mat-button color="warn" (click)="setDeleteNote(note.nid)">Delete</button>
+                        </div>
+                      </div>
+                    </mat-expansion-panel>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="row">                 <!-- Create Note Form sss-->
+              <div class="col-6">
+                <form name="addNoteForm" ngForm #addNoteForm="ngForm" (ngSubmit)="createNote(addNoteForm)">
+                  <mat-form-field>
+                    <input matInput ngModel #name="ngModel" name="name" id="name" placeholder="Name of Note">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput ngModel #description="ngModel" name="description" id="description" placeholder="Description of Note">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <textarea matInput ngModel #content="ngModel" name="content" id="content" placeholder="Type Your Note Here"></textarea>
+                  </mat-form-field>
+                  <div class="row">
+                    <div class="col">
+                      <button mat-button type="submit" color="primary">Add Note</button>
+                      <button mat-button type="reset" color="warn">Reset Form</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+<!-- Main Tag -->
+</div>

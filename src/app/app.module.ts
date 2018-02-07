@@ -16,10 +16,14 @@ import { AuthService } from './services/auth.service';
 import {AuthGuardService} from './services/auth-guard.service';
 import { MembersComponent } from './members/members.component';
 import {
-  MatButtonModule, MatCardModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatListModule, MatMenuModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatExpansionModule, MatFormFieldModule,
+  MatIconModule, MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatPaginatorModule,
   MatProgressBarModule,
-  MatSidenavModule, MatSliderModule,
-  MatToolbarModule
+  MatSidenavModule, MatSliderModule, MatSortModule, MatTableModule,
+  MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import { RegisterComponent } from './register/register.component';
 import {UsersService} from './services/users.service';
@@ -31,6 +35,8 @@ import { OwnerDashboardHeaderComponent } from './owner_area/owner-dashboard-head
 import { OwnerDashboardSidebarComponent } from './owner_area/owner-dashboard-sidebar/owner-dashboard-sidebar.component';
 import { OwnerDashboardFooterComponent } from './owner_area/owner-dashboard-footer/owner-dashboard-footer.component';
 import { ContactsComponent } from './contacts/contacts.component';
+import {ContactsService} from "./services/contacts.service";
+import { ContactDetailsComponent } from './contacts/contact-details/contact-details.component';
 
 
 const appRoutes: Routes = [
@@ -40,7 +46,8 @@ const appRoutes: Routes = [
   { path: 'members', component: MembersComponent, canActivate: [AuthGuardService]},
   { path: 'profile/edit', component: EditprofileComponent, canActivate: [AuthGuardService]},
   { path: 'owner', component: OwnerDashboardComponent, canActivate: [AuthGuardService]},
-  { path: 'contacts', component: ContactsComponent, canActivate: [AuthGuardService]}
+  { path: 'contacts', component: ContactsComponent, canActivate: [AuthGuardService]},
+  { path: 'contacts/:id', component: ContactDetailsComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({
@@ -56,7 +63,8 @@ const appRoutes: Routes = [
     OwnerDashboardHeaderComponent,
     OwnerDashboardSidebarComponent,
     OwnerDashboardFooterComponent,
-    ContactsComponent
+    ContactsComponent,
+    ContactDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -78,12 +86,20 @@ const appRoutes: Routes = [
     MatListModule,
     MatSliderModule,
     MatProgressBarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatSortModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatExpansionModule,
     HttpClientModule
   ],
   providers: [
     AuthService,
     AuthGuardService,
-    UsersService
+    UsersService,
+    ContactsService
   ],
   bootstrap: [AppComponent]
 })

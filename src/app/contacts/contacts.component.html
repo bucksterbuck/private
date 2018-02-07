@@ -3,36 +3,170 @@
 
 <div id="main" class="main">
 
-  <div class="row text-center">
-    <div class="col-12">
-      <h1>Contacts</h1>
-      <h1>Create Contact</h1>
+  <!--<div class="row justify-content-center">-->
+    <!--<div class="col-12">-->
+    <!--<ul *ngFor="let contact of contacts | async">-->
+      <!--<li>{{ contact.id }}</li>-->
+      <!--<li>{{ contact.first }}</li>-->
+      <!--<li>{{ contact.last }}</li>-->
+    <!--</ul>-->
+    <!--</div>--dffdsfs
+  <!--</div>-->
+<div class="row justify-content-center">
+  <div class="example-header col-9">
+    <form>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    </form>
+  </div>
+</div>
+  <div class="row justify-content-center">
+    <div class="example-container mat-elevation-z8 col-9">
+
+    <mat-table [dataSource]="dataSource" matSort>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="first">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+        <mat-cell *matCellDef="let contact"> {{contact.first}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="last">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+        <mat-cell *matCellDef="let contact"> {{contact.last}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="company">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
+        <mat-cell *matCellDef="let contact"> {{contact.company}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+        <mat-cell *matCellDef="let contact"> {{contact.email}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="phone">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Phone </mat-header-cell>
+        <mat-cell *matCellDef="let contact"> {{contact.phone}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fax">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Fax </mat-header-cell>
+        <mat-cell *matCellDef="let contact"> {{contact.fax}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="options">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Options </mat-header-cell>
+        <mat-cell *matCellDef="let contact">
+          <button mat-button color="primary" routerLink="{{ contact.id }}">Edit</button>
+        </mat-cell>
+      </ng-container>
+        <ng-container matColumnDef="delete">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+          <mat-cell *matCellDef="let contact">
+            <button mat-button color="primary">Delete</button>
+          </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let contact; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
     </div>
   </div>
+    <mat-paginator #paginator [length]="contacts.length | async" [pageIndex]="0"  [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
+
+  <div class="row text-center">
+    <div class="col-12 mat-card-title">
+      <h1>Contacts</h1>
+      <h1>Create Contacts</h1>
+    </div>
+  </div>
+<!-- ssss-->
   <div class="row">
     <div class="col-12">
-  <form>
+  <form #contactForm="ngForm" (ngSubmit)="create(contactForm)">
       <div class="form-row row justify-content-center">
 
-        <div class="col-3 form-group">
-          <label for="first">First Name</label>
-          <input required ngModel #first="ngModel" name="first" type="text" class="form-control" id="first">
-        </div>
+    <div class="col-3 form-group mat-card">
 
-        <div class="col-3 form-group">
-          <label for="last">Last Name</label>
-          <input type="text" class="form-control" id="last">
-        </div>
-        <div class="col-3 form-group">
-          <label for="company">Company</label>
-          <input type="text" class="form-control" id="company">
-        </div>
+      <mat-form-field>
+      <input matInput ngModel #first="ngModel" name="first" type="text"  id="first" placeholder="First Name">
+      </mat-form-field>
+    </div>
 
+    <div class="col-3 form-group mat-card">
+      <mat-form-field>
+      <input matInput placeholder="Last Name" type="text" name="last" ngModel #last="ngModel"  id="last">
+      </mat-form-field>
+    </div>
+    <div class="col-3 form-group">
+      <mat-form-field>
+      <input matInput type="text" placeholder="Company" name="company" ngModel #company="ngModel"  id="company">
+      </mat-form-field>
+    </div>
+
+  </div>
+    <div class="form-row row justify-content-center">
+      <div class="col-3 form-group">
+        <mat-form-field>
+        <input matInput required ngModel placeholder="Phone  Number" #phone="ngModel" name="phone" type="text"  id="phone">
+        </mat-form-field>
       </div>
+      <div class="col-3 form-group">
+        <mat-form-field>
+        <input matInput type="text" placeholder="Fax Number" name="fax" ngModel #fax="ngModel"  id="fax">
+        </mat-form-field>
+      </div>
+      <div class="col-3 form-group">
+        <mat-form-field>
+        <input matInput type="text" placeholder="Email Address" name="email" ngModel #email="ngModel"  id="email">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-row row justify-content-center">
+      <div class="col-9 form-group">
+        <mat-form-field>
+        <input matInput matInput type="text" placeholder="Website Address" name="website" ngModel #website="ngModel"  id="website">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-row row justify-content-center">
+      <div class="col-9 form-group">
+        <mat-form-field>
+        <input matInput type="text" placeholder="Address Line 1" name="address1" ngModel #address1="ngModel"  id="address1">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-row row justify-content-center">
+      <div class="col-9 form-group">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Address Line 2" name="address2" ngModel #address2="ngModel"  id="address2">
+      </mat-form-field>
+      </div>
+    </div>
+    <div class="form-row row justify-content-center">
+      <div class="col-3 form-group">
+        <mat-form-field>
+        <input matInput  placeholder="City" ngModel #city="ngModel" type="text" name="city" id="city">
+        </mat-form-field>
+      </div>
+      <div class="col-3 form-group">
+        <mat-form-field>
+        <input matInput  placeholder="State" name="state" ngModel #state="ngModel" type="text" id="state">
+        </mat-form-field>
+      </div>
+      <div class="col-3 form-group">
+        <mat-form-field>
+        <input matInput  placeholder="ZIP Code" name="zip" ngModel #zip="ngModel" type="text" id="zip">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-row row justify-content-center">
+      <div class="col-9"><button type="submit" class="btn btn-outline-primary">Submit</button>
+      <button type="reset" class="btn btn-outline-danger">Reset</button></div>
+
+    </div>
   </form>
     </div>
   </div>
 
 
+<!-- ss-->
 </div>
